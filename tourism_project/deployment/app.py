@@ -5,7 +5,7 @@ import joblib
 
 model_path="tourism_project/saved_model/best_tourism-model_v1.joblib"
 # Load the trained model
-model = joblib.load()
+model = joblib.load(model_path)
 
 # Streamlit UI
 st.title("MLOPS – Tourism Package Buy Prediction Application")
