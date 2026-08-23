@@ -1,5 +1,4 @@
 pandas
-huggingface_hub
 streamlit
 joblib
 scikit-learn
