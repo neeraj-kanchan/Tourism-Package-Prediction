@@ -4,17 +4,16 @@ import pandas as pd
 import joblib
 
 
-# model_path="tourism_project/saved_model/best_tourism-model_v1.joblib"
-# # Load the trained model
-# model = joblib.load(model_path)
+model_path="best_tourism-model_v1.joblib"
+model = joblib.load(model_path)
 
-# Resolve model path dynamically relative to app.py location
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_PATH = os.path.join(BASE_DIR, "saved_model", "best_tourism-model_v1.joblib")
+# # Resolve model path dynamically relative to app.py location
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# MODEL_PATH = os.path.join(BASE_DIR, "saved_model", "best_tourism-model_v1.joblib")
 
-print("MODEL PATH = " + MODEL_PATH)
+# print("MODEL PATH = " + MODEL_PATH)
 
-model = joblib.load(MODEL_PATH)
+# model = joblib.load(MODEL_PATH)
 
 # Streamlit UI
 st.title("MLOPS – Tourism Package Buy Prediction Application")
