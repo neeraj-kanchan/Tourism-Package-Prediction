@@ -1,16 +1,11 @@
 import streamlit as st
 import pandas as pd
-from huggingface_hub import hf_hub_download
 import joblib
 
-# Download the model from Hugging Face Hub
-model_path = hf_hub_download(
-    repo_id="neeraj-kanchan/Tourism-Package-Prediction",
-    filename="best_tourism-model_v1.joblib"
-)
 
+model_path="tourism_project/saved_model/best_tourism-model_v1.joblib"
 # Load the trained model
-model = joblib.load(model_path)
+model = joblib.load()
 
 # Streamlit UI
 st.title("MLOPS – Tourism Package Buy Prediction Application")
