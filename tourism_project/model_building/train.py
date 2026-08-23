@@ -9,20 +9,16 @@ from sklearn.metrics import accuracy_score, classification_report, recall_score
 
 import joblib
 
-from huggingface_hub import login, HfApi, create_repo
-from huggingface_hub.utils import RepositoryNotFoundError, HfHubHTTPError
 import mlflow
 
-mlflow.set_tracking_uri("http://localhost:5000")
-mlflow.set_experiment("mlops-trai-experiment")
-
-api = HfApi()
+mlflow.set_tracking_uri("file:./mlruns")
+mlflow.set_experiment("mlops-train-experiment")
 
 
-Xtrain_loc = "hf://datasets/neeraj-kanchan/Tourism-Package-Prediction/Xtrain.csv"
-Xtest_loc = "hf://datasets/neeraj-kanchan/Tourism-Package-Prediction/Xtest.csv"
-ytrain_loc = "hf://datasets/neeraj-kanchan/Tourism-Package-Prediction/ytrain.csv"
-ytest_loc = "hf://datasets/neeraj-kanchan/Tourism-Package-Prediction/ytest.csv"
+Xtrain_loc = "tourism_project/data/Xtrain.csv"
+Xtest_loc = "tourism_project/data/Xtest.csv"
+ytrain_loc = "tourism_project/data/ytrain.csv"
+ytest_loc = "tourism_project/data/ytest.csv"
 
 Xtrain = pd.read_csv(Xtrain_loc)
 Xtest = pd.read_csv(Xtest_loc)
@@ -133,30 +129,10 @@ with mlflow.start_run():
     })
 
     # Save the model locally
-    model_loc = "best_tourism-model_v1.joblib"
+    model_loc = "tourism_project/saved_model/best_tourism-model_v1.joblib"
     joblib.dump(best_model, model_loc)
 
     # Log the model artifact
     mlflow.log_artifact(model_loc, artifact_path="model")
     print(f"Model saved as artifact at: {model_loc}")
 
-    # Upload to Hugging Face
-    repo_id = "neeraj-kanchan/Tourism-model"
-    repo_type = "model"
-
-    # Step 1: Check if the space exists
-    try:
-        api.repo_info(repo_id=repo_id, repo_type=repo_type)
-        print(f"Space '{repo_id}' already exists. Using it.")
-    except RepositoryNotFoundError:
-        print(f"Space '{repo_id}' not found. Creating new space...")
-        create_repo(repo_id=repo_id, repo_type=repo_type, private=False)
-        print(f"Space '{repo_id}' created.")
-
-    # create_repo("churn-model", repo_type="model", private=False)
-    api.upload_file(
-        path_or_fileobj=model_loc,
-        path_in_repo=model_loc,
-        repo_id=repo_id,
-        repo_type=repo_type,
-    )
