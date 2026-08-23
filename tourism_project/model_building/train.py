@@ -129,7 +129,8 @@ with mlflow.start_run():
     })
 
     # Save the model locally
-    model_loc = "tourism_project/saved_model/best_tourism-model_v1.joblib"
+    # model_loc = "tourism_project/saved_model/best_tourism-model_v1.joblib"
+    model_loc = "best_tourism-model_v1.joblib"
     joblib.dump(best_model, model_loc)
 
     # Log the model artifact
