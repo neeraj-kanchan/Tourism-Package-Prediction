@@ -133,24 +133,12 @@ input_df = pd.DataFrame([input_data])
 # -----------------------------
 # Predict
 # -----------------------------
+
 if st.button("Predict"):
-    # Get probability for target class 1
-    prediction_proba = model.predict_proba(input_df)[0, 1]
-    
-    # Apply threshold to determine class
-    prediction = int(prediction_proba >= classification_threshold)
-    
-    st.write(f"Purchase Probability: {prediction_proba:.2%}")
-    
+    prediction_proba = model.predict_proba(input_data)[0, 1]
+    prediction = (prediction_proba >= classification_threshold).astype(int)
+
     if prediction == 1:
-        st.success("The customer is likely to purchase the package.")
+        st.success("  The customer is likely to purchase the package.")
     else:
         st.error("The customer is unlikely to purchase the package.")
-# if st.button("Predict"):
-#     prediction_proba = model.predict_proba(input_data)[0, 1]
-#     prediction = (prediction_proba >= classification_threshold).astype(int)
-
-#     if prediction == 1:
-#         st.success("  The customer is likely to purchase the package.")
-#     else:
-#         st.error("The customer is unlikely to purchase the package.")
